@@ -235,19 +235,13 @@ $(document).ready(function() {
     }*/
     $('textarea').height(140);
     $('#my-select').multiSelect({selectableOptgroup: true});
-    $('#my-select').multiSelect('addOption', {value: 'test', text: 'test', index: 0, nested: 'optgroup_label'});
-    $('#my-select').multiSelect('addOption', {value: 'test2', text: 'test2', index: 0, nested: 'optgroup_label'});
-    $('#my-select').multiSelect('addOption', {value: 'test1', text: 'test10', index: 0, nested: 'optgroup_label1'});
-    $('#my-select').multiSelect('addOption', {value: 'test3', text: 'test3', index: 0, nested: 'optgroup_label1'});
-    $('#my-select').multiSelect('addOption', {value: 'test5', text: 'test5', index: 0, nested: 'optgroup_label2'});
+    var data = [{"group":"KKtix","element":"Exhibition","value":0},{"group":"KKtix","element":"Foods","value":1},{"group":"KKtix","element":"Learning","value":2},{"group":"KKtix","element":"Mixer","value":3},{"group":"KKtix","element":"Outdoors","value":4},{"group":"KKtix","element":"Performance","value":5},{"group":"TestGroup","element":"elem0","value":6},{"group":"TestGroup","element":"elem1","value":7},{"group":"TestGroup","element":"elem2","value":8},{"group":"TestGroup","element":"elem3","value":9},{"group":"TestGroup","element":"elem4","value":10}]
+    var data_num = data.length;
+    var i;
+    for (i = 0; i < data_num; i++) {
+        $('#my-select').multiSelect('addOption', {value: data[i].value, text: data[i].element, index: 0, nested: data[i].group});
+    }
     $('#my-select').multiSelect('deselect_all');
-    var bin_num = 3;
-    var element_num = [2, 3, 1];
-    var bin = ['1', '2', '3'];
-    var bin1 = ['1-1', '1-2'];
-    var bin2 = ['2-1', '2-2', '2-3'];
-    var bin3 = ['3-1'];
-    var show = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]];
   })
 
   $("#add_button").click(function(){
