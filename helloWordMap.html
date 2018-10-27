@@ -208,8 +208,6 @@ $(document).ready(function() {
     border-radius: 10px;
     cursor: pointer;
   }
-  @media {
-  }
 </style>
 
 <link rel="stylesheet" href="./jquery.mobile-1.4.5.min.css">
@@ -241,7 +239,7 @@ $(document).ready(function() {
         <circle cx="100" cy="100" r="100" fill="#fff"></circle>
         <g>
           <path d="M 87,30 L 113,30 L 113,87 L 170,87 L 170,113 L 113,113 L 113,170 L 87,170 L 87,113 L 30,113 L 30,87 L 87,87 L 87,30 Z" fill="red"></path>
-        </g
+        </g>
       </svg>
     </div>
     <div id="multi_selector">
@@ -293,6 +291,17 @@ $(document).ready(function() {
     $('#my-select').multiSelect('addOption', {value: 'test3', text: 'test3', index: 0, nested: 'optgroup_label1'});
     $('#my-select').multiSelect('addOption', {value: 'test5', text: 'test5', index: 0, nested: 'optgroup_label2'});
     $('#my-select').multiSelect('deselect_all');
+    
+    $.ajax({
+      url : "https://hackathon-api.azurewebsites.net/api/hackathon/Category",
+      method : 'GET',
+    }).done((data)=>{
+      category = JSON.parse(data)
+      category.forEach(element => {
+        console.log(element)
+      });
+    })
+
     var bin_num = 3;
     var element_num = [2, 3, 1];
     var bin = ['1', '2', '3'];
