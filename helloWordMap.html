@@ -133,21 +133,6 @@ $(document).ready(function() {
       z-index: 5;
       display: none;
     }
-    #slider_block {
-      display: none;
-    }
-    #slider_block2 {
-      position: absolute;
-      top: 80%;
-      right: 0;
-      left: 0;
-      margin: auto;
-      width: 60%;
-      background: rgba(256, 256, 256, 0.8);
-      border-radius: 10px;
-      cursor: default;
-      z-index: 6;
-    }
   }
   #input_block {
     position: absolute;
@@ -275,9 +260,6 @@ $(document).ready(function() {
   })
   $(function() {
     $( "#slider" ).slider();
-  });
-  $(function() {
-    $( "#slider2" ).slider();
   });
   $("#add_button").click(function(){
     $("#add_page").fadeIn(100);
