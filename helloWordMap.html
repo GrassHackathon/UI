@@ -98,7 +98,7 @@ $(document).ready(function() {
     left: 7vh;
     height: 30vh;
     width: 50vh;
-    background: rgba(256, 256, 256, 0.8);
+    background: rgba(256, 256, 256, 0);
     border-radius: 7px;
     padding: 14px 20px;
     cursor: default;
@@ -117,12 +117,12 @@ $(document).ready(function() {
   }
   #input_block {
     position: absolute;
-    top: 0%;
+    top: 7%;
     right: 0;
     bottom: 0;
     left: 0;
     margin: auto;
-    height: 80%;
+    height: 84%;
     width: 55vh;
     background: rgba(256, 256, 256, 0.8);
     border-radius: 7px;
@@ -299,8 +299,14 @@ $(document).ready(function() {
   })
   $("#category_button").click(function(){
     if ($("#add_page").is(":visible")) {
-      $("#add_page").fadeOut(100);
-      $("#multi_selector").fadeOut(100);
+      if (($("#input_block").is(":visible"))) {
+        $("#multi_selector").fadeIn(100);
+        $("#input_block").fadeOut(100);
+      }
+      else {
+        $("#add_page").fadeOut(100);
+        $("#multi_selector").fadeOut(100);
+      }
     }
     else {
       $("#add_page").fadeIn(100);
