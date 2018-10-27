@@ -134,6 +134,9 @@ $(document).ready(function() {
       display: none;
     }
     #slider_block {
+      display: none;
+    }
+    #slider_block2 {
       position: absolute;
       top: 80%;
       right: 0;
@@ -183,6 +186,9 @@ $(document).ready(function() {
     cursor: default;
     z-index: 6;
   }
+  #slider_block2 {
+    display: none;
+  }
 </style>
 
 <link rel="stylesheet" href="./jquery.mobile-1.4.5.min.css">
@@ -197,7 +203,8 @@ $(document).ready(function() {
   <!--<button id='reverseSearchButton' style='position: absolute; left: 350px; top: 10px; width: 40px; z-index: 999'>&#x1F50D;</button>-->
   <div id="fullpage">
     <div id='myMap' style='width: 100vw; height: 100vh;'></div>
-    <div id="slider_block"><div id="slider"></div><svg viewBox="0,0,100,5" preserveAspectRatio="xMidYMid meet"><g><text x="2" y="4" font-size="4" fill="#000">1</text></g></svg></div>
+    <div id="slider_block"><div id="slider"></div><svg viewBox="0,0,100,5" preserveAspectRatio="xMidYMid meet"><g><text x="2" y="4" font-size="4" fill="#000">1 Day</text></g></svg></div>
+    <div id="slider_block2"><div id="slider"></div><svg viewBox="0,0,100,4" preserveAspectRatio="xMidYMid meet"><g><text x="2" y="4" font-size="4" fill="#000">1 Day</text></g></svg></div>
     <div id="add_button">
       <svg id="cross" viewBox="0,0,200,200">
         <circle cx="100" cy="100" r="100" fill="#fff"></circle>
