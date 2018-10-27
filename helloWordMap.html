@@ -117,7 +117,7 @@ $(document).ready(function() {
   }
   #input_block {
     position: absolute;
-    top: 5%;
+    top: 0%;
     right: 0;
     bottom: 0;
     left: 0;
@@ -130,26 +130,26 @@ $(document).ready(function() {
     z-index: 5;
     display: none;
   }
-  @media (pointer:coarse) {
+  /*@media (pointer:coarse) {*/
     #input_section {
       position: relative;
-      top: 10%;
+      top: 3%;
       right: 0;
       bottom: 0;
       left: 0;
       margin: auto;
-      height: 60vh;
+      height: 80%;
       width: 50vh;
       z-index: 5;
       background: rgba(256, 256, 256, 0);
     }
     label {
-      font-size: 100px;
+      font-size: 30px;
       padding: 20px;
     }
     textarea {
       width: 85%;
-      height: 90px;
+      height: 20%;
       padding: 12px 20px;
       margin: 10px 30px;
       box-sizing: border-box;
@@ -161,15 +161,15 @@ $(document).ready(function() {
     }
     input[type=text], select {
       width: 85%;
-      padding: 12px 20px;
-      margin: 10px 30px;
+      height: 8%;
+      margin: 3% 0% 0% 0%;
       display: inline-block;
       border: 1px solid #ccc;
       border-radius: 4px;
       font-size: 30px;
       box-sizing: border-box;
     }
-  }/*
+  /*}*//*
   textarea {
     width: 85%;
     height: 90px;
@@ -243,17 +243,17 @@ $(document).ready(function() {
     </div>
     <div id="input_block">
       <div id="input_section">
-        <label for="title">title</label>
+        <label for="title"><svg viewBox="0,0,100,10" preserveAspectRatio="xMidYMid meet"><g><text x="0" y="10" font-family="Microsoft JhengHei" font-size="8" fill="#000">title</text></g></label>
         <input type="text" id="title" name="title">
-        <label for="time">time</label>
+        <label for="time"><svg viewBox="0,0,100,10" preserveAspectRatio="xMidYMid meet"><g><text x="0" y="10" font-family="Microsoft JhengHei" font-size="8" fill="#000">time</text></g></label>
         <input type="text" id="time" name="time">
-        <label for="location">location</label>
+        <label for="location"><svg viewBox="0,0,100,10" preserveAspectRatio="xMidYMid meet"><g><text x="0" y="10" font-family="Microsoft JhengHei" font-size="8" fill="#000">location</text></g></label>
         <select id="country" name="country">
           <option value="australia">Australia</option>
           <option value="canada">Canada</option>
           <option value="usa">USA</option>
         </select>
-        <label for="description">description</label>
+        <label for="description"><svg viewBox="0,0,100,10" preserveAspectRatio="xMidYMid meet"><g><text x="0" y="10" font-family="Microsoft JhengHei" font-size="8" fill="#000">description</text></g></label>
         <textarea></textarea>
         <input type="submit" value="Submit">
       </div>
