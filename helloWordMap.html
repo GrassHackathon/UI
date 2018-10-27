@@ -269,7 +269,7 @@ $(document).ready(function() {
     })
   })
   $(function() {
-    $( "#slider" ).slider();
+    $( "#slider" ).slider({range: "max", min: 1, max: 10,});
   });
   $("#add_button").click(function(){
     $("#add_page").fadeIn(100);
