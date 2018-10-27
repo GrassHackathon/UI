@@ -130,6 +130,9 @@ $(document).ready(function() {
     z-index: 5;
     display: none;
   }
+  .blank {
+    font-size: 150%
+  }
   /*@media (pointer:coarse) {*/
     /*#input_section {
       position: relative;
@@ -240,7 +243,7 @@ $(document).ready(function() {
   <form method="post" action="demo_form.php">
       <div class="ui-field-contain">
         <svg viewBox="0,0,100,10" preserveAspectRatio="xMidYMid meet"><g><text x="0" y="10" font-size="10" fill="#000">name</text></g></svg>
-        <input type="text" name="project_name" id="project_name">
+        <input type="text" name="project_name" id="project_name" class="blank">
         <svg viewBox="0,0,100,10" preserveAspectRatio="xMidYMid meet"><g><text x="0" y="10" font-size="10" fill="#000">date</text></g></svg>
         <input type="date" name="date" id="date">
         <svg viewBox="0,0,100,10" preserveAspectRatio="xMidYMid meet"><g><text x="0" y="10" font-size="10" fill="#000">location</text></g></svg>
@@ -271,6 +274,7 @@ $(document).ready(function() {
     for (i = 0; i < 5; i++) {
       $(`#add_page${i}`).fadeIn(100);
     }*/
+    $('textarea').height(6);
     $('#my-select').multiSelect({selectableOptgroup: true});
     $('#my-select').multiSelect('addOption', {value: 'test', text: 'test', index: 0, nested: 'optgroup_label'});
     $('#my-select').multiSelect('addOption', {value: 'test2', text: 'test2', index: 0, nested: 'optgroup_label'});
