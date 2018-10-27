@@ -78,7 +78,7 @@ $(document).ready(function() {
     display: block;
   }
   #category_button {
-    position: relative;
+    position: absolute;
     top: 5vh;
     left: 3.5vh;
     height: 8vh;
@@ -222,18 +222,6 @@ $(document).ready(function() {
   <!--<input id='searchInput' style='position: absolute; left: 10px; top: 10px; width: 300px; z-index: 999'></input>-->
   <!--<button id='searchButton' style='position: absolute; left: 310px; top: 10px; width: 40px; z-index: 999'>&#x1F50D;</button>-->
   <!--<button id='reverseSearchButton' style='position: absolute; left: 350px; top: 10px; width: 40px; z-index: 999'>&#x1F50D;</button>-->
-
-  <div id="category_button">
-    <svg viewBox="0,0,220,80">
-      <rect x="0" y="0" rx="10" ry="10" width="220" height="80" fill="#fff"></rect>
-      <rect x="20" y="15" rx="0" ry="0" width="50" height="8" fill="#000"></rect>
-      <rect x="20" y="35" rx="0" ry="0" width="50" height="8" fill="#000"></rect>
-      <rect x="20" y="55" rx="0" ry="0" width="50" height="8" fill="#000"></rect>
-      <g>
-        <text x="85" y="50" font-family="Microsoft JhengHei" font-size="30" fill="#000">Category</text>
-      </g>
-    </svg>
-  </div>
   <div id="fullpage">
     <div id='myMap' style='width: 100vw; height: 100vh;'></div>
     <div id="add_button">
@@ -242,6 +230,17 @@ $(document).ready(function() {
         <g>
           <path d="M 87,30 L 113,30 L 113,87 L 170,87 L 170,113 L 113,113 L 113,170 L 87,170 L 87,113 L 30,113 L 30,87 L 87,87 L 87,30 Z" fill="red"></path>
         </g
+      </svg>
+    </div>
+    <div id="category_button">
+      <svg viewBox="0,0,220,80">
+        <rect x="0" y="0" rx="10" ry="10" width="220" height="80" fill="#fff"></rect>
+        <rect x="20" y="15" rx="0" ry="0" width="50" height="8" fill="#000"></rect>
+        <rect x="20" y="35" rx="0" ry="0" width="50" height="8" fill="#000"></rect>
+        <rect x="20" y="55" rx="0" ry="0" width="50" height="8" fill="#000"></rect>
+        <g>
+          <text x="85" y="50" font-family="Microsoft JhengHei" font-size="30" fill="#000">Category</text>
+        </g>
       </svg>
     </div>
     <div id="multi_selector">
@@ -301,12 +300,6 @@ $(document).ready(function() {
     var bin3 = ['3-1'];
     var show = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]];
   })
-
-  $(window).scroll(function () {
-    if ($(window).scrollTop() > 100) {
-      $('#category_bottun').css('top', $(window).scrollTop());
-    }
-  });
 
   $("#add_button").click(function(){
     $("#add_page").fadeIn(100);
