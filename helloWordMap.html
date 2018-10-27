@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>Hello Bing Maps API</title>
+<script type='text/javascript' src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.3.1.js"></script>
+<script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?key=ApJ6GXYZJUy--Dg_6j3CQF80XR1MDlQBJ1U5UR-_tdmtoMXwKPm0ldyjJiOatjWX'></script>
+<script type='text/javascript'>
+var map;
+var searchManager;
+function loadMapScenario() {
+  map = new Microsoft.Maps.Map(document.getElementById('myMap'), {});
+  Microsoft.Maps.loadModule('Microsoft.Maps.Search', function () {
+    searchManager = new Microsoft.Maps.Search.SearchManager(map);
+  });
+}
+
+$(document).ready(function() {
+  $('#searchButton').click(function(e) {
+    var requestOptions = {
+      bounds: map.getBounds(),
+      where: $('#searchInput').val(),
+      callback: function (answer, userData) {
+        map.setView({ bounds: answer.results[0].bestView });
+        map.entities.push(new Microsoft.Maps.Pushpin(answer.results[0].location));
+      }
+    };
+    searchManager.geocode(requestOptions);
+  });
+  $('#reverseSearchButton').click(function(e) {
+    var items = $('#searchInput').val().split(',');
+    var lat = parseFloat(items[0]);
+    var lon = parseFloat(items[1]);
+    var reverseGeocodeRequestOptions = {
+      location: new Microsoft.Maps.Location(lat, lon),
+      callback: function (answer, userData) {
+        map.setView({ bounds: answer.bestView });
+        map.entities.push(new Microsoft.Maps.Pushpin(reverseGeocodeRequestOptions.location));
+        $('#searchInput').val(answer.address.formattedAddress);
+      }
+    };
+    searchManager.reverseGeocode(reverseGeocodeRequestOptions);
+  });
+});
+</script>
+<style>
+  #add_page {
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    height: 100%;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    cursor: default;
+    z-index: 3;
+    display: none;
+  }
+  .section{
+    text-align:center;
+    background-attachment: fixed;
+    -moz-background-attachment: fixed;
+    -webkit-background-attachment: fixed;
+    -o-background-attachment: fixed;
+    background-size: cover;
+    -moz-background-size: cover;
+    -webkit-background-size: cover;
+    -o-background-size: cover;
+  }
+  #add_button {
+    position: absolute;
+    bottom: 7%;
+    right: 5%;
+    height: 10vh;
+    width: 10vh;
+    background: rgba(0, 0, 0, 0);
+    cursor: pointer;
+    z-index: 3;
+    display: block;
+  }
+  #category_button {
+    position: absolute;
+    top: 5vh;
+    left: 3.5vh;
+    height: 8vh;
+    width: 20vh;
+    background: rgba(0, 0, 0, 0);
+    cursor: pointer;
+    z-index: 5;
+    stroke: rgba(0,0,0,0.7);
+    filter: drop-shadow(0px 0px 20px rgba(0,0,0,0.7));
+    -webkit-filter: drop-shadow(0px 0px 20px rgba(0,0,0,0.7));
+    -moz-filter: drop-shadow(0px 0px 20px rgba(0,0,0,0.7));
+    display: block;
+  }
+  #multi_selector {
+    position: absolute;
+    top: 14vh;
+    left: 7vh;
+    height: 30vh;
+    width: 50vh;
+    background: rgba(256, 256, 256, 0.8);
+    border-radius: 7px;
+    padding: 14px 20px;
+    cursor: default;
+    z-index: 5;
+    text-align: center;
+    display: none;
+  }
+  #cross {
+    position: absolute;
+    z-index: 4;
+    stroke: rgba(0,0,0,0.7);
+    filter: drop-shadow(0px 0px 20px rgba(0,0,0,0.7));
+    -webkit-filter: drop-shadow(0px 0px 20px rgba(0,0,0,0.7));
+    -moz-filter: drop-shadow(0px 0px 20px rgba(0,0,0,0.7));
+    display: block;
+  }
+  #input_block {
+    position: absolute;
+    top: 5%;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+    height: 70vh;
+    width: 55vh;
+    background: rgba(256, 256, 256, 0.8);
+    border-radius: 7px;
+    cursor: default;
+    z-index: 5;
+    display: none;
+  }
+  #input_section {
+    position: relative;
+    top: 10%;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+    height: 60vh;
+    width: 50vh;
+    z-index: 5;
+    background: rgba(256, 256, 256, 0);
+  }
+  label {
+    padding: 20px;
+  }
+  input[type=text], select {
+    width: 85%;
+    padding: 12px 20px;
+    margin: 10px 30px;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    box-sizing: border-box;
+  }
+  textarea {
+    width: 85%;
+    height: 90px;
+    padding: 12px 20px;
+    margin: 10px 30px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    background-color: #f8f8f8;
+    font-size: 16px;
+    resize: none;
+  }
+  input[type=submit] {
+    position: relative;
+    top: 5%;
+    left: 25%;
+    width: 50%;
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  input[type=submit]:hover {
+    background-color: #45a049;
+  }
+  @media {
+  }
+</style>
+<link href="./multi-select.css" media="screen" rel="stylesheet" type="text/css">
+</head>
+<body onload='loadMapScenario()' style='margin: 0'>
+  <!--<input id='searchInput' style='position: absolute; left: 10px; top: 10px; width: 300px; z-index: 999'></input>-->
+  <!--<button id='searchButton' style='position: absolute; left: 310px; top: 10px; width: 40px; z-index: 999'>&#x1F50D;</button>-->
+  <!--<button id='reverseSearchButton' style='position: absolute; left: 350px; top: 10px; width: 40px; z-index: 999'>&#x1F50D;</button>-->
+  <div id="fullpage">
+    <div id='myMap' style='width: 100vw; height: 100vh;'></div>
+    <div id="add_button">
+      <svg id="cross" viewBox="0,0,200,200">
+        <circle cx="100" cy="100" r="100" fill="#fff"></circle>
+        <g>
+          <path d="M 87,30 L 113,30 L 113,87 L 170,87 L 170,113 L 113,113 L 113,170 L 87,170 L 87,113 L 30,113 L 30,87 L 87,87 L 87,30 Z" fill="red"></path>
+        </g
+      </svg>
+    </div>
+    <div id="category_button">
+      <svg viewBox="0,0,220,80">
+        <rect x="0" y="0" rx="10" ry="10" width="220" height="80" fill="#fff"></rect>
+        <rect x="20" y="15" rx="0" ry="0" width="50" height="8" fill="#000"></rect>
+        <rect x="20" y="35" rx="0" ry="0" width="50" height="8" fill="#000"></rect>
+        <rect x="20" y="55" rx="0" ry="0" width="50" height="8" fill="#000"></rect>
+        <g>
+          <text x="85" y="50" font-family="Microsoft JhengHei" font-size="30" fill="#000">Category</text>
+        </g>
+      </svg>
+    </div>
+    <div id="multi_selector">
+      <select multiple="multiple" id="my-select" name="my-select[]">
+      </select>
+    </div>
+    <div id="input_block">
+      <div id="input_section">
+        <label for="title">title</label>
+        <input type="text" id="title" name="title">
+        <label for="time">time</label>
+        <input type="text" id="time" name="time">
+        <label for="location">location</label>
+        <select id="country" name="country">
+          <option value="australia">Australia</option>
+          <option value="canada">Canada</option>
+          <option value="usa">USA</option>
+        </select>
+        <label for="description">description</label>
+        <textarea></textarea>
+        <input type="submit" value="Submit">
+      </div>
+    </div>
+    <div id="add_page">
+    </div>
+    <div id="add_page1">
+    </div>
+  </div>
+</body>
+</html>
+
+<script src="./jquery-1.8.3.js"></script>
+<script src="./jquery.multi-select.js" type="text/javascript"></script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    /*var i;
+    for (i = 0; i < 5; i++) {
+      $(`#add_page${i}`).fadeIn(100);
+    }*/
+    $('#my-select').multiSelect({selectableOptgroup: true});
+    $('#my-select').multiSelect('addOption', {value: 'test', text: 'test', index: 0, nested: 'optgroup_label'});
+    $('#my-select').multiSelect('addOption', {value: 'test2', text: 'test2', index: 0, nested: 'optgroup_label'});
+    $('#my-select').multiSelect('addOption', {value: 'test1', text: 'test10', index: 0, nested: 'optgroup_label1'});
+    $('#my-select').multiSelect('addOption', {value: 'test3', text: 'test3', index: 0, nested: 'optgroup_label1'});
+    $('#my-select').multiSelect('addOption', {value: 'test5', text: 'test5', index: 0, nested: 'optgroup_label2'});
+    $('#my-select').multiSelect('deselect_all');
+    var bin_num = 3;
+    var element_num = [2, 3, 1];
+    var bin = ['1', '2', '3'];
+    var bin1 = ['1-1', '1-2'];
+    var bin2 = ['2-1', '2-2', '2-3'];
+    var bin3 = ['3-1'];
+    var show = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]];
+  })
+
+  $("#add_button").click(function(){
+    $("#add_page").fadeIn(100);
+    $("#input_block").fadeIn(100);
+  })
+  $("#add_page").click(function(){
+    $("#add_page").fadeOut(100);
+    $("#input_block").fadeOut(100);
+    $("#multi_selector").fadeOut(100);
+  })
+  $("#category_button").click(function(){
+    if ($("#add_page").is(":visible")) {
+      $("#add_page").fadeOut(100);
+      $("#multi_selector").fadeOut(100);
+    }
+    else {
+      $("#add_page").fadeIn(100);
+      $("#multi_selector").fadeIn(100);
+    }
+  })
+</script>
