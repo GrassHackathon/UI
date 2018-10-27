@@ -269,9 +269,10 @@ $(document).ready(function() {
     })
   })
   $(function() {
-    $( "#slider" ).slider({range: "max", min: 1, max: 10,});
+    $("#slider").slider({range: "max", min: 1, max: 10,});
   });
   $("#add_button").click(function(){
+console.log($("#slider").val());
     $("#add_page").fadeIn(100);
     $("#input_block").fadeIn(100);
   })
