@@ -115,23 +115,38 @@ $(document).ready(function() {
     -moz-filter: drop-shadow(0px 0px 20px rgba(0,0,0,0.7));
     display: block;
   }
-  #input_block {
-    position: absolute;
-    top: 20%;
-    right: 0;
-    left: 0;
-    margin: auto;
-    width: 55vh;
-    background: rgba(256, 256, 256, 0.8);
-    border-radius: 7px;
-    cursor: default;
-    z-index: 5;
-    display: none;
+
+  @media (pointer:coarse) {
+    #input_block {
+      position: absolute;
+      top: 40%;
+      right: 0;
+      left: 0;
+      margin: auto;
+      width: 55vh;
+      background: rgba(256, 256, 256, 0.8);
+      border-radius: 7px;
+      cursor: default;
+      z-index: 5;
+      display: none;
+    }
   }
   .blank {
     font-size: 200%;
   }
-  /*@media (pointer:coarse) {*/
+    #input_block {
+      position: absolute;
+      top: 20%;
+      right: 0;
+      left: 0;
+      margin: auto;
+      width: 55vh;
+      background: rgba(256, 256, 256, 0.8);
+      border-radius: 7px;
+      cursor: default;
+      z-index: 5;
+      display: none;
+    }
     /*#input_section {
       position: relative;
       top: 3%;
