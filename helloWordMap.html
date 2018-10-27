@@ -131,7 +131,7 @@ $(document).ready(function() {
     display: none;
   }
   /*@media (pointer:coarse) {*/
-    #input_section {
+    /*#input_section {
       position: relative;
       top: 3%;
       right: 0;
@@ -168,20 +168,8 @@ $(document).ready(function() {
       border-radius: 4px;
       font-size: 30px;
       box-sizing: border-box;
-    }
+    }*/
   /*}*//*
-  textarea {
-    width: 85%;
-    height: 90px;
-    padding: 12px 20px;
-    margin: 10px 30px;
-    box-sizing: border-box;
-    border: 2px solid #ccc;
-    border-radius: 4px;
-    background-color: #f8f8f8;
-    font-size: 16px;
-    resize: none;
-  }
   input[type=text], select {
     width: 85%;
     padding: 12px 20px;
@@ -247,39 +235,31 @@ $(document).ready(function() {
       </select>
     </div>
     <div id="input_block">
-      <div id="input_section">
-        <label for="title"><svg viewBox="0,0,100,10" preserveAspectRatio="xMidYMid meet"><g><text x="0" y="10" font-family="Microsoft JhengHei" font-size="8" fill="#000">title</text></g></label>
-        <input type="text" id="title" name="title">
-        <label for="time"><svg viewBox="0,0,100,10" preserveAspectRatio="xMidYMid meet"><g><text x="0" y="10" font-family="Microsoft JhengHei" font-size="8" fill="#000">time</text></g></label>
-        <input type="text" id="time" name="time">
-        <label for="location"><svg viewBox="0,0,100,10" preserveAspectRatio="xMidYMid meet"><g><text x="0" y="10" font-family="Microsoft JhengHei" font-size="8" fill="#000">location</text></g></label>
-        <select id="country" name="country">
-          <option value="australia">Australia</option>
-          <option value="canada">Canada</option>
-          <option value="usa">USA</option>
+
+<div data-role="main" class="ui-content">
+  <form method="post" action="demo_form.php">
+      <div class="ui-field-contain">
+        <svg viewBox="0,0,100,10" preserveAspectRatio="xMidYMid meet"><g><text x="0" y="10" font-size="10" fill="#000">name</text></g></svg>
+        <input type="text" name="project_name" id="project_name">
+        <svg viewBox="0,0,100,10" preserveAspectRatio="xMidYMid meet"><g><text x="0" y="10" font-size="10" fill="#000">date</text></g></svg>
+        <input type="date" name="date" id="date">
+        <svg viewBox="0,0,100,10" preserveAspectRatio="xMidYMid meet"><g><text x="0" y="10" font-size="10" fill="#000">location</text></g></svg>
+        <select name="location" id="location">
+          <option value="mon">Taipei</option>
+          <option value="tue">Tainan</option>
         </select>
-        <label for="description"><svg viewBox="0,0,100,10" preserveAspectRatio="xMidYMid meet"><g><text x="0" y="10" font-family="Microsoft JhengHei" font-size="8" fill="#000">description</text></g></label>
-        <textarea></textarea>
-        <input type="submit" value="Submit">
+        <svg viewBox="0,0,100,10" preserveAspectRatio="xMidYMid meet"><g><text x="0" y="10" font-size="10" fill="#000">descriptor</text></g></svg>
+        <textarea name="description" id="description"></textarea>
       </div>
+    <input type="submit" data-inline="true" value="提交">
+  </form>
+</div>
+
     </div>
     <div id="add_page">
     </div>
     <div id="add_page1">
     </div>
-<div data-role="main" class="ui-content">
-  <form method="post" action="demo_form.php">
-      <div class="ui-field-contain">
-        <label for="fullname">全名：</label>
-        <input type="text" name="fullname" id="fullname">       
-        <label for="bday">生日：</label>
-        <input type="date" name="bday" id="bday">
-        <label for="email">E-mail:</label>
-        <input type="email" name="email" id="email" placeholder="你的电子邮箱..">
-      </div>
-    <input type="submit" data-inline="true" value="提交">
-  </form>
-</div>
   </div>
 </body>
 </html>
