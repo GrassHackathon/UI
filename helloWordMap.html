@@ -229,10 +229,6 @@ $(document).ready(function() {
 <script src="./jquery.multi-select.js" type="text/javascript"></script>
 <script type="text/javascript">
   $(document).ready(function() {
-    /*var i;
-    for (i = 0; i < 5; i++) {
-      $(`#add_page${i}`).fadeIn(100);
-    }*/
     $('textarea').height(140);
     $('#my-select').multiSelect({selectableOptgroup: true});
     
@@ -247,17 +243,7 @@ $(document).ready(function() {
         $('#my-select').multiSelect('addOption', {value: data[i].value, text: data[i].element, index: 0, nested: data[i].group});
       }
       $('#my-select').multiSelect('deselect_all');
-    })
-
-      var bin_num = 3;
-      var element_num = [2, 3, 1];
-      var bin = ['1', '2', '3'];
-      var bin1 = ['1-1', '1-2'];
-      var bin2 = ['2-1', '2-2', '2-3'];
-      var bin3 = ['3-1'];
-      var show = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]];
   })
-
   $("#add_button").click(function(){
     $("#add_page").fadeIn(100);
     $("#input_block").fadeIn(100);
