@@ -44,17 +44,6 @@ $(document).ready(function() {
 });
 </script>
 <style>
-  #add_page {
-    position: absolute;
-    top: 0%;
-    left: 0%;
-    height: 100%;
-    width: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    cursor: default;
-    z-index: 3;
-    display: none;
-  }
   .section{
     text-align:center;
     background-attachment: fixed;
@@ -65,6 +54,20 @@ $(document).ready(function() {
     -moz-background-size: cover;
     -webkit-background-size: cover;
     -o-background-size: cover;
+  }
+  .blank {
+    font-size: 200%;
+  }
+  #add_page {
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    height: 100%;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    cursor: default;
+    z-index: 3;
+    display: none;
   }
   #add_button {
     position: absolute;
@@ -131,9 +134,6 @@ $(document).ready(function() {
       display: none;
     }
   }
-  .blank {
-    font-size: 200%;
-  }
   #input_block {
     position: absolute;
     top: 20%;
@@ -197,30 +197,26 @@ $(document).ready(function() {
       </select>
     </div>
     <div id="input_block">
-
-<div data-role="main" class="ui-content">
-  <form method="post" action="demo_form.php">
-    <div class="ui-field-contain">
-      <svg viewBox="0,0,100,10" preserveAspectRatio="xMidYMid meet"><g><text x="0" y="10" font-size="10" fill="#000">name</text></g></svg>
-      <input type="text" name="project_name" id="project_name" class="blank">
-      <svg viewBox="0,0,100,10" preserveAspectRatio="xMidYMid meet"><g><text x="0" y="10" font-size="10" fill="#000">date</text></g></svg>
-      <input type="date" name="date" id="date">
-      <svg viewBox="0,0,100,10" preserveAspectRatio="xMidYMid meet"><g><text x="0" y="10" font-size="10" fill="#000">location</text></g></svg>
-      <select name="location" id="location">
-        <option value="mon">Taipei</option>
-        <option value="tue">Tainan</option>
-      </select>
-      <svg viewBox="0,0,100,10" preserveAspectRatio="xMidYMid meet"><g><text x="0" y="10" font-size="10" fill="#000">description</text></g></svg>
-      <textarea name="description" id="description"></textarea>
-      <div id="summit"><svg viewBox="0,0,100,50" preserveAspectRatio="xMidYMid meet"><g><text x="10" y="40" font-size="40" fill="#000">提交</text></g></svg></div>
-    </div>
-  </form>
-</div>
-
+      <div data-role="main" class="ui-content">
+        <form method="post" action="demo_form.php">
+          <div class="ui-field-contain">
+            <svg viewBox="0,0,100,10" preserveAspectRatio="xMidYMid meet"><g><text x="0" y="10" font-size="10" fill="#000">name</text></g></svg>
+            <input type="text" name="project_name" id="project_name" class="blank">
+            <svg viewBox="0,0,100,10" preserveAspectRatio="xMidYMid meet"><g><text x="0" y="10" font-size="10" fill="#000">date</text></g></svg>
+            <input type="date" name="date" id="date">
+            <svg viewBox="0,0,100,10" preserveAspectRatio="xMidYMid meet"><g><text x="0" y="10" font-size="10" fill="#000">location</text></g></svg>
+            <select name="location" id="location">
+              <option value="mon">Taipei</option>
+              <option value="tue">Tainan</option>
+            </select>
+            <svg viewBox="0,0,100,10" preserveAspectRatio="xMidYMid meet"><g><text x="0" y="10" font-size="10" fill="#000">description</text></g></svg>
+            <textarea name="description" id="description"></textarea>
+            <div id="summit"><svg viewBox="0,0,100,50" preserveAspectRatio="xMidYMid meet"><g><text x="10" y="40" font-size="40" fill="#000">提交</text></g></svg></div>
+          </div>
+        </form>
+      </div>
     </div>
     <div id="add_page">
-    </div>
-    <div id="add_page1">
     </div>
   </div>
 </body>
@@ -243,7 +239,9 @@ $(document).ready(function() {
         $('#my-select').multiSelect('addOption', {value: data[i].value, text: data[i].element, index: 0, nested: data[i].group});
       }
       $('#my-select').multiSelect('deselect_all');
+    })
   })
+
   $("#add_button").click(function(){
     $("#add_page").fadeIn(100);
     $("#input_block").fadeIn(100);
@@ -251,6 +249,38 @@ $(document).ready(function() {
   $("#add_page").click(function(){
     $("#add_page").fadeOut(100);
     $("#input_block").fadeOut(100);
+    if (($("#multi_selector").is(":visible"))) {
+      var i, j;
+      for (i = map.entities.getLength() - 1; i >= 0; i--) {
+        var pushpin = map.entities.get(i);
+        if (pushpin instanceof Microsoft.Maps.Pushpin)
+          map.entities.removeAt(i);
+      }
+      optionElements = $("#my-select").find('option:selected');
+      columnOptions = $.map(optionElements , function(n) {
+        return [{name: "selected_columns[]", value: n.value, aux: n.text}];
+      });
+      for (i = 0; i < columnOptions.length; i++) {
+        $.ajax({
+          url : "https://hackathon-api.azurewebsites.net/api/hackathon/Events/"+columnOptions[i].value,
+          method : 'GET',
+        }).done((data)=>{
+        var data = JSON.parse(data)
+        var data_num = data.length;
+        for (j = 0; j < data_num; j++) {
+          var requestOptions = {
+            bounds: map.getBounds(),
+            where: data[i].address,
+            callback: function (answer, userData) {
+              //map.setView({ bounds: answer.results[0].bestView });
+              map.entities.push(new Microsoft.Maps.Pushpin(answer.results[0].location, {icon: 'https://bingmapsisdk.blob.core.windows.net/isdksamples/defaultPushpin.png', anchor: new Microsoft.Maps.Point(12, 39)}));
+            }
+          }
+          searchManager.geocode(requestOptions);
+        }
+        })
+      }
+    }
     $("#multi_selector").fadeOut(100);
   })
   $("#category_button").click(function(){
@@ -262,6 +292,36 @@ $(document).ready(function() {
       else {
         $("#add_page").fadeOut(100);
         $("#multi_selector").fadeOut(100);
+        var i, j;
+        for (i = map.entities.getLength() - 1; i >= 0; i--) {
+          var pushpin = map.entities.get(i);
+          if (pushpin instanceof Microsoft.Maps.Pushpin)
+            map.entities.removeAt(i);
+        }
+        optionElements = $("#my-select").find('option:selected');
+        columnOptions = $.map(optionElements , function(n) {
+          return [{name: "selected_columns[]", value: n.value, aux: n.text}];
+        });
+        for (i = 0; i < columnOptions.length; i++) {
+          $.ajax({
+            url : "https://hackathon-api.azurewebsites.net/api/hackathon/Events/"+columnOptions[i].value,
+            method : 'GET',
+          }).done((data)=>{
+          var data = JSON.parse(data)
+          var data_num = data.length;
+          for (j = 0; j < data_num; j++) {
+            var requestOptions = {
+              bounds: map.getBounds(),
+              where: data[i].address,
+              callback: function (answer, userData) {
+                //map.setView({ bounds: answer.results[0].bestView });
+                map.entities.push(new Microsoft.Maps.Pushpin(answer.results[0].location));
+              }
+            }
+            searchManager.geocode(requestOptions);
+          }
+          })
+        }
       }
     }
     else {
