@@ -6,6 +6,10 @@
 <script type='text/javascript' src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.3.1.js"></script>
 <script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?key=ApJ6GXYZJUy--Dg_6j3CQF80XR1MDlQBJ1U5UR-_tdmtoMXwKPm0ldyjJiOatjWX'></script>
 <script type='text/javascript'>
+var infoBoxHtmlHead = '<div id="info" style="position: relative; background-color:White; border-style:solid; border-width:medium; border-color:DarkOrange; border-radius: 10px; min-height:500px; width: 500px;">'
+var infoBoxHtmlSelect = '<select id = "event" style="position: absolute; top: 5%; left: 5%; font-size: 2em; width: 80%; height: 20%;">'
+var infoBoxHtmlSelectValue = {}
+var infoBoxHtmlTail = '</select><textarea style="position: absolute; height: 30%; width: 80%; top: 60%; left: 5%; font-size: 3em;">備註</textarea> </div>'
 var map;
 var searchManager;
 function loadMapScenario() {
@@ -279,7 +283,6 @@ $(document).ready(function() {
 
 <script src="./jquery.multi-select.js" type="text/javascript"></script>
 <script type="text/javascript">
-  var time_diff = 30;
   var D = new Date();
   $(document).ready(function() {
     $('textarea').height(140);
@@ -322,12 +325,46 @@ $(document).ready(function() {
           method : 'GET',
         }).done((data)=>{
         var data = JSON.parse(data)
+
+        data = data.events
+        var data_num = data.length;
+        for (j = 0; j < data_num; j++) {
+          address = data[j].address
+          if(!infoBoxHtmlSelectValue[address])
+            infoBoxHtmlSelectValue[address] = ''
+          infoBoxHtmlSelectValue[address] += '<option>' + data[j].name + data[j].date + '</option>'
+        }
+        for (j = 0; j < data_num; j++) {
+          address = data[j].address
+          var requestOptions = {
+            bounds: map.getBounds(),
+            where: address,
+            userData: address,
+            callback: function (answer, userData) {
+              map.setView({ bounds: answer.results[0].bestView });
+            var infoboxTemplate = infoBoxHtmlHead + infoBoxHtmlSelect + infoBoxHtmlSelectValue[userData] + infoBoxHtmlTail
+            var point = new Microsoft.Maps.Location(answer.results[0].location['latitude'], answer.results[0].location['longitude'])
+            var infobox = new Microsoft.Maps.Infobox(point, {
+              htmlContent: infoboxTemplate, visible: false});
+              infobox.setMap(map);
+              var pushpin = new Microsoft.Maps.Pushpin(point, null);
+              Microsoft.Maps.Events.addHandler(pushpin, 'click', function () {
+              infobox.setOptions({ visible: true });
+              });
+              map.entities.push(pushpin);
+            }
+          }
+          searchManager.geocode(requestOptions);
+        }
+        })
+
+/*
         var data_num = data.events.length;
         for (j = 0; j < data_num; j++) {
           var data_split = data.events[j].date.split("~");
           var date = data_split[0].split(" ")[0].split("/");
           var diff = (30 - D.getDate()) + (Number(date[1]) - D.getMonth() - 2) * 30 + Number(date[2]);
-          if (Number(date[0]) != D.getFullYear() || diff > time_diff)
+          if (Number(date[0]) != D.getFullYear() || diff > $("#myRange").val())
             continue;
           var requestOptions = {
             bounds: map.getBounds(),
@@ -340,6 +377,7 @@ $(document).ready(function() {
           searchManager.geocode(requestOptions);
         }
         })
+*/
       }
     }
     $("#multi_selector").fadeOut(100);
