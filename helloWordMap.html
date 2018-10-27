@@ -85,7 +85,7 @@ $(document).ready(function() {
     width: 20vh;
     background: rgba(0, 0, 0, 0);
     cursor: pointer;
-    z-index: 5;
+    z-index: 7;
     stroke: rgba(0,0,0,0.7);
     filter: drop-shadow(0px 0px 20px rgba(0,0,0,0.7));
     -webkit-filter: drop-shadow(0px 0px 20px rgba(0,0,0,0.7));
@@ -183,20 +183,17 @@ $(document).ready(function() {
     font-size: 16px;
     box-sizing: border-box;
   }*/
-  input[type=submit] {
+  #summit {
     position: relative;
-    top: 5%;
-    left: 25%;
-    width: 50%;
-    background-color: #4CAF50;
+    top: 0%;
+    left: 3%;
+    width: 20%;
+    background-color: #fff;
     color: white;
-    padding: 14px 20px;
+    padding: 5px 5px;
     border: none;
-    border-radius: 4px;
+    border-radius: 10px;
     cursor: pointer;
-  }
-  input[type=submit]:hover {
-    background-color: #45a049;
   }
   @media {
   }
@@ -241,20 +238,20 @@ $(document).ready(function() {
 
 <div data-role="main" class="ui-content">
   <form method="post" action="demo_form.php">
-      <div class="ui-field-contain">
-        <svg viewBox="0,0,100,10" preserveAspectRatio="xMidYMid meet"><g><text x="0" y="10" font-size="10" fill="#000">name</text></g></svg>
-        <input type="text" name="project_name" id="project_name" class="blank">
-        <svg viewBox="0,0,100,10" preserveAspectRatio="xMidYMid meet"><g><text x="0" y="10" font-size="10" fill="#000">date</text></g></svg>
-        <input type="date" name="date" id="date">
-        <svg viewBox="0,0,100,10" preserveAspectRatio="xMidYMid meet"><g><text x="0" y="10" font-size="10" fill="#000">location</text></g></svg>
-        <select name="location" id="location">
-          <option value="mon">Taipei</option>
-          <option value="tue">Tainan</option>
-        </select>
-        <svg viewBox="0,0,100,10" preserveAspectRatio="xMidYMid meet"><g><text x="0" y="10" font-size="10" fill="#000">descriptor</text></g></svg>
-        <textarea name="description" id="description"></textarea>
-      </div>
-    <input type="submit" data-inline="true" value="提交">
+    <div class="ui-field-contain">
+      <svg viewBox="0,0,100,10" preserveAspectRatio="xMidYMid meet"><g><text x="0" y="10" font-size="10" fill="#000">name</text></g></svg>
+      <input type="text" name="project_name" id="project_name" class="blank">
+      <svg viewBox="0,0,100,10" preserveAspectRatio="xMidYMid meet"><g><text x="0" y="10" font-size="10" fill="#000">date</text></g></svg>
+      <input type="date" name="date" id="date">
+      <svg viewBox="0,0,100,10" preserveAspectRatio="xMidYMid meet"><g><text x="0" y="10" font-size="10" fill="#000">location</text></g></svg>
+      <select name="location" id="location">
+        <option value="mon">Taipei</option>
+        <option value="tue">Tainan</option>
+      </select>
+      <svg viewBox="0,0,100,10" preserveAspectRatio="xMidYMid meet"><g><text x="0" y="10" font-size="10" fill="#000">description</text></g></svg>
+      <textarea name="description" id="description"></textarea>
+    </div>
+    <div id="summit"><svg viewBox="0,0,100,50" preserveAspectRatio="xMidYMid meet"><g><text x="10" y="40" font-size="40" fill="#000">提交</text></g></svg></div>
   </form>
 </div>
 
