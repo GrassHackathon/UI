@@ -159,6 +159,18 @@ $(document).ready(function() {
     border-radius: 10px;
     cursor: pointer;
   }
+  #slider_block {
+    position: absolute;
+    bottom: 5%;
+    right: 0;
+    left: 0;
+    margin: auto;
+    width: 70%;
+    background: rgba(256, 256, 256, 0.8);
+    border-radius: 10px;
+    cursor: default;
+    z-index: 6;
+  }
 </style>
 
 <link rel="stylesheet" href="./jquery.mobile-1.4.5.min.css">
@@ -173,6 +185,7 @@ $(document).ready(function() {
   <!--<button id='reverseSearchButton' style='position: absolute; left: 350px; top: 10px; width: 40px; z-index: 999'>&#x1F50D;</button>-->
   <div id="fullpage">
     <div id='myMap' style='width: 100vw; height: 100vh;'></div>
+    <div id="slider_block"><div id="slider"></div><svg viewBox="0,0,100,3" preserveAspectRatio="xMidYMid meet"><g><text x="2" y="2" font-size="2" fill="#000">提交</text></g></svg></div>
     <div id="add_button">
       <svg id="cross" viewBox="0,0,200,200">
         <circle cx="100" cy="100" r="100" fill="#fff"></circle>
@@ -206,8 +219,8 @@ $(document).ready(function() {
             <input type="date" name="date" id="date">
             <svg viewBox="0,0,100,10" preserveAspectRatio="xMidYMid meet"><g><text x="0" y="10" font-size="10" fill="#000">location</text></g></svg>
             <select name="location" id="location">
-              <option value="mon">Taipei</option>
-              <option value="tue">Tainan</option>
+              <option value="taiwan, taipei">Taipei</option>
+              <option value="taiwan, tainan">Tainan</option>
             </select>
             <svg viewBox="0,0,100,10" preserveAspectRatio="xMidYMid meet"><g><text x="0" y="10" font-size="10" fill="#000">description</text></g></svg>
             <textarea name="description" id="description"></textarea>
@@ -224,6 +237,8 @@ $(document).ready(function() {
 
 <script src="./jquery.multi-select.js" type="text/javascript"></script>
 <script type="text/javascript">
+  var time_diff = 30;
+  var D = new Date();
   $(document).ready(function() {
     $('textarea').height(140);
     $('#my-select').multiSelect({selectableOptgroup: true});
@@ -241,7 +256,9 @@ $(document).ready(function() {
       $('#my-select').multiSelect('deselect_all');
     })
   })
-
+  $(function() {
+    $( "#slider" ).slider();
+  });
   $("#add_button").click(function(){
     $("#add_page").fadeIn(100);
     $("#input_block").fadeIn(100);
@@ -266,14 +283,19 @@ $(document).ready(function() {
           method : 'GET',
         }).done((data)=>{
         var data = JSON.parse(data)
-        var data_num = data.length;
+        var data_num = data.events.length;
         for (j = 0; j < data_num; j++) {
+          var data_split = data.events[j].date.split("~");
+          var date = data_split[0].split(" ")[0].split("/");
+          var diff = (30 - D.getDate()) + (Number(date[1]) - D.getMonth() - 2) * 30 + Number(date[2]);
+          if (Number(date[0]) != D.getFullYear() || diff > time_diff)
+            continue;
           var requestOptions = {
             bounds: map.getBounds(),
-            where: data[i].address,
+            where: data.events[j].address,
             callback: function (answer, userData) {
               //map.setView({ bounds: answer.results[0].bestView });
-              map.entities.push(new Microsoft.Maps.Pushpin(answer.results[0].location, {icon: 'https://bingmapsisdk.blob.core.windows.net/isdksamples/defaultPushpin.png', anchor: new Microsoft.Maps.Point(12, 39)}));
+              map.entities.push(new Microsoft.Maps.Pushpin(answer.results[0].location, {icon: data.groupicon, anchor: new Microsoft.Maps.Point(1, 3)}));
             }
           }
           searchManager.geocode(requestOptions);
@@ -283,6 +305,18 @@ $(document).ready(function() {
     }
     $("#multi_selector").fadeOut(100);
   })
+
+  $("#summit").click(function(){
+    var data = {"name":$('#project_name').val(), "address":$('#location').val(), "date":$('#date').val(), "infoLink":$('#description').val(), "group":"Other", "element":"test"};
+    $.ajax({
+      url : "https://hackathon-api.azurewebsites.net/api/hackathon/newEvent",
+      method : 'POST',
+      data : JSON.stringify(data),
+      dataType: 'json',
+    });
+    location.reload();
+  });
+
   $("#category_button").click(function(){
     if ($("#add_page").is(":visible")) {
       if (($("#input_block").is(":visible"))) {
@@ -312,10 +346,10 @@ $(document).ready(function() {
           for (j = 0; j < data_num; j++) {
             var requestOptions = {
               bounds: map.getBounds(),
-              where: data[i].address,
+              where: data[j].address,
               callback: function (answer, userData) {
                 //map.setView({ bounds: answer.results[0].bestView });
-                map.entities.push(new Microsoft.Maps.Pushpin(answer.results[0].location));
+                map.entities.push(new Microsoft.Maps.Pushpin(answer.results[0].location, {icon: data.groupicon, anchor: new Microsoft.Maps.Point(12, 39)}));
               }
             }
             searchManager.geocode(requestOptions);
