@@ -369,7 +369,7 @@ $(document).ready(function() {
   })
 
   $("#summit").click(function(){
-    var data = {"name":$('#project_name').val(),"address":$('#location').val(),"date":$('#date').val(),"infoLink":$('#description').val(),"group":"Other","element":"test8"};
+    var data = {"name":$('#project_name').val(),"address":$('#location').val(),"date":$('#date').val(),"infoLink":$('#description').val(),"group":"Other","element":"test"};
     $.ajax({
       url : "https://hackathon-api.azurewebsites.net/api/hackathon/newEvent",
       method : 'POST',
