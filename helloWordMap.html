@@ -369,7 +369,7 @@ $(document).ready(function() {
   })
 
   $("#summit").click(function(){
-    var data = {"name":$('#project_name').val(),"address":$('#location').val(),"date":$('#date').val(),"infoLink":$('#description').val(),"group":"Other","element":"test"};
+    var data = {"name":$('#project_name').val(),"address":$('#location').val(),"date":$('#date').val(),"infoLink":$('#description').val(),"group":"Other","element":"test8"};
     $.ajax({
       url : "https://hackathon-api.azurewebsites.net/api/hackathon/newEvent",
       method : 'POST',
@@ -377,7 +377,6 @@ $(document).ready(function() {
       contentType: "application/json; charset=utf-8",
       dataType: 'json',
       async: false,
-      }
     });
       $.ajax({
         url : "https://hackathon-api.azurewebsites.net/api/hackathon/Category",
