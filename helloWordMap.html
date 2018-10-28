@@ -6,10 +6,10 @@
 <script type='text/javascript' src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.3.1.js"></script>
 <script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?key=ApJ6GXYZJUy--Dg_6j3CQF80XR1MDlQBJ1U5UR-_tdmtoMXwKPm0ldyjJiOatjWX'></script>
 <script type='text/javascript'>
-var infoBoxHtmlHead = '<div id="info" style="position: relative; background-color:White; border-style:solid; border-width:medium; border-color:DarkOrange; border-radius: 10px; min-height:500px; width: 500px;">'
-var infoBoxHtmlSelect = '<select id = "event" style="position: absolute; top: 5%; left: 5%; font-size: 2em; width: 80%; height: 20%;">'
+var infoBoxHtmlHead = '<div id="info" style="position: relative; background-color:White; border-style:solid; border-width:medium; border-radius: 10px; min-height:200px; width: 400px;">'
+var infoBoxHtmlSelect = '<select id = "event" style="position: absolute; top: 10%; left: 10%; font-size: 2em; width: 80%; height: 30%;">'
 var infoBoxHtmlSelectValue = {}
-var infoBoxHtmlTail = '</select><textarea style="position: absolute; height: 30%; width: 80%; top: 60%; left: 5%; font-size: 3em;">備註</textarea> </div>'
+var infoBoxHtmlTail = '</select><textarea style="position: absolute; height: 30%; width: 80%; top: 50%; left: 10%; font-size: 1em;">備註</textarea> </div>'
 var map;
 var searchManager;
 function loadMapScenario() {
@@ -326,36 +326,35 @@ $(document).ready(function() {
         }).done((data)=>{
         var data = JSON.parse(data)
 
-        data = data.events
-        var data_num = data.length;
+        var data_num = data.events.length;
         for (j = 0; j < data_num; j++) {
-          address = data[j].address
+          address = data.events[j].address
           if(!infoBoxHtmlSelectValue[address])
             infoBoxHtmlSelectValue[address] = ''
-          infoBoxHtmlSelectValue[address] += '<option>' + data[j].name + data[j].date + '</option>'
+          infoBoxHtmlSelectValue[address] += '<option>' + data.events[j].name + data.events[j].date + '</option>'
         }
         for (j = 0; j < data_num; j++) {
-          address = data[j].address
+          address = data.events[j].address
           var requestOptions = {
             bounds: map.getBounds(),
             where: address,
             userData: address,
             callback: function (answer, userData) {
-              map.setView({ bounds: answer.results[0].bestView });
-            var infoboxTemplate = infoBoxHtmlHead + infoBoxHtmlSelect + infoBoxHtmlSelectValue[userData] + infoBoxHtmlTail
-            var point = new Microsoft.Maps.Location(answer.results[0].location['latitude'], answer.results[0].location['longitude'])
-            var infobox = new Microsoft.Maps.Infobox(point, {
-              htmlContent: infoboxTemplate, visible: false});
-              infobox.setMap(map);
-              var pushpin = new Microsoft.Maps.Pushpin(point, null);
-              Microsoft.Maps.Events.addHandler(pushpin, 'click', function () {
-              infobox.setOptions({ visible: true });
-              });
-              map.entities.push(pushpin);
+              //map.setView({ bounds: answer.results[0].bestView });
+              var infoboxTemplate = infoBoxHtmlHead + infoBoxHtmlSelect + infoBoxHtmlSelectValue[userData] + infoBoxHtmlTail
+              var point = new Microsoft.Maps.Location(answer.results[0].location['latitude'], answer.results[0].location['longitude'])
+              var infobox = new Microsoft.Maps.Infobox(point, {
+                htmlContent: infoboxTemplate, visible: false});
+                infobox.setMap(map);
+                var pushpin = new Microsoft.Maps.Pushpin(point, {icon: data.groupicon, anchor: new Microsoft.Maps.Point(12, 39)});
+                Microsoft.Maps.Events.addHandler(pushpin, 'click', function () {
+                  infobox.setOptions({visible: true, showCloseButton: true});
+                });
+                map.entities.push(pushpin);
+              }
             }
+            searchManager.geocode(requestOptions);
           }
-          searchManager.geocode(requestOptions);
-        }
         })
 
 /*
