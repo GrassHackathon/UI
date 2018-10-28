@@ -356,27 +356,6 @@ $(document).ready(function() {
             searchManager.geocode(requestOptions);
           }
         })
-
-/*
-        var data_num = data.events.length;
-        for (j = 0; j < data_num; j++) {
-          var data_split = data.events[j].date.split("~");
-          var date = data_split[0].split(" ")[0].split("/");
-          var diff = (30 - D.getDate()) + (Number(date[1]) - D.getMonth() - 2) * 30 + Number(date[2]);
-          if (Number(date[0]) != D.getFullYear() || diff > $("#myRange").val())
-            continue;
-          var requestOptions = {
-            bounds: map.getBounds(),
-            where: data.events[j].address,
-            callback: function (answer, userData) {
-              //map.setView({ bounds: answer.results[0].bestView });
-              map.entities.push(new Microsoft.Maps.Pushpin(answer.results[0].location, {icon: data.groupicon, anchor: new Microsoft.Maps.Point(1, 3)}));
-            }
-          }
-          searchManager.geocode(requestOptions);
-        }
-        })
-*/
       }
     }
     $("#multi_selector").fadeOut(100);
@@ -418,18 +397,35 @@ $(document).ready(function() {
             method : 'GET',
           }).done((data)=>{
           var data = JSON.parse(data)
-          var data_num = data.length;
+          var data_num = data.events.length;
           for (j = 0; j < data_num; j++) {
+            address = data.events[j].address
+            if(!infoBoxHtmlSelectValue[address])
+              infoBoxHtmlSelectValue[address] = ''
+            infoBoxHtmlSelectValue[address] += '<option>' + data.events[j].name + data.events[j].date + '</option>'
+          }
+          for (j = 0; j < data_num; j++) {
+            address = data.events[j].address
             var requestOptions = {
               bounds: map.getBounds(),
-              where: data[j].address,
+              where: address,
+              userData: address,
               callback: function (answer, userData) {
                 //map.setView({ bounds: answer.results[0].bestView });
-                map.entities.push(new Microsoft.Maps.Pushpin(answer.results[0].location, {icon: data.groupicon, anchor: new Microsoft.Maps.Point(12, 39)}));
+                var infoboxTemplate = infoBoxHtmlHead + infoBoxHtmlSelect + infoBoxHtmlSelectValue[userData] + infoBoxHtmlTail
+                var point = new Microsoft.Maps.Location(answer.results[0].location['latitude'], answer.results[0].location['longitude'])
+                var infobox = new Microsoft.Maps.Infobox(point, {
+                  htmlContent: infoboxTemplate, visible: false});
+                  infobox.setMap(map);
+                  var pushpin = new Microsoft.Maps.Pushpin(point, {icon: data.groupicon, anchor: new Microsoft.Maps.Point(12, 39)});
+                  Microsoft.Maps.Events.addHandler(pushpin, 'click', function () {
+                    infobox.setOptions({visible: true, showCloseButton: true});
+                  });
+                  map.entities.push(pushpin);
+                }
               }
+              searchManager.geocode(requestOptions);
             }
-            searchManager.geocode(requestOptions);
-          }
           })
         }
       }
